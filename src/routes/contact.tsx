@@ -3,13 +3,15 @@ import { motion } from "framer-motion";
 import { PageHeader } from "@/components/SiteLayout";
 import { Phone, Mail, MapPin, Siren, Clock, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
+import symbolLogo from "@/assets/vardan-hospital-logo.png";
+import wordmarkLogo from "@/assets/logo.png";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — Abhay Jeevan Hospital, Jhusi, Prayagraj" },
-      { name: "description", content: "Contact Abhay Jeevan Hospital — address, phone, email and emergency line. Located in Jhusi, Prayagraj, Uttar Pradesh." },
-      { property: "og:title", content: "Contact Abhay Jeevan Hospital" },
+      { title: "Contact — Vardan Hospital & Maternity Centre, Jhusi, Prayagraj" },
+      { name: "description", content: "Contact Vardan Hospital & Maternity Centre — address, phone, email and emergency line. Located in Jhusi, Prayagraj, Uttar Pradesh." },
+      { property: "og:title", content: "Contact Vardan Hospital & Maternity Centre" },
       { property: "og:description", content: "Get in touch with our team in Jhusi, Prayagraj." },
       { property: "og:url", content: "/contact" },
     ],
@@ -27,6 +29,10 @@ function ContactPage() {
       <section className="py-20">
         <div className="container-page grid lg:grid-cols-2 gap-12">
           <div className="space-y-6">
+            <div className="flex items-center gap-2.5 mb-4">
+              <img src={symbolLogo} alt="Vardan Hospital Symbol Logo" className="h-14 w-auto object-contain" />
+              <img src={wordmarkLogo} alt="Vardan Hospital Wordmark" className="h-11 w-auto object-contain" />
+            </div>
             {[
               { icon: MapPin, title: "Address", text: "Main Road, Jhusi, Prayagraj, Uttar Pradesh 211019, India" },
               { icon: Phone, title: "Phone", text: "+91 98765 43210", href: "tel:+919876543210" },

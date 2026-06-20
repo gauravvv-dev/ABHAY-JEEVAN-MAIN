@@ -11,9 +11,9 @@ import team from "@/assets/team.jpg";
 export const Route = createFileRoute("/gallery")({
   head: () => ({
     meta: [
-      { title: "Gallery — Abhay Jeevan Hospital, Prayagraj" },
-      { name: "description", content: "Photos of Abhay Jeevan Hospital — building, reception, treatment rooms, equipment and our healthcare team in Jhusi, Prayagraj." },
-      { property: "og:title", content: "Gallery — Abhay Jeevan Hospital" },
+      { title: "Gallery — Vardan Hospital & Maternity Centre, Prayagraj" },
+      { name: "description", content: "Photos of Vardan Hospital & Maternity Centre — building, reception, treatment rooms, equipment and our healthcare team in Jhusi, Prayagraj." },
+      { property: "og:title", content: "Gallery — Vardan Hospital & Maternity Centre" },
       { property: "og:description", content: "Step inside our hospital." },
       { property: "og:url", content: "/gallery" },
     ],
@@ -34,7 +34,7 @@ const items = [
 function GalleryPage() {
   return (
     <div>
-      <PageHeader eyebrow="Gallery" title="A look inside Abhay Jeevan Hospital." subtitle="From our welcoming reception to advanced diagnostics — every space is designed around the patient." />
+      <PageHeader eyebrow="Gallery" title="A look inside Vardan Hospital & Maternity Centre." subtitle="From our welcoming reception to advanced diagnostics — every space is designed around the patient." />
       <section className="py-20">
         <div className="container-page">
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">

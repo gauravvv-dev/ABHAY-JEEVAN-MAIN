@@ -7,9 +7,9 @@ import { CheckCircle2, CalendarPlus } from "lucide-react";
 export const Route = createFileRoute("/appointment")({
   head: () => ({
     meta: [
-      { title: "Book Appointment — Abhay Jeevan Hospital, Prayagraj" },
-      { name: "description", content: "Book a doctor's appointment at Abhay Jeevan Hospital, Jhusi, Prayagraj. Choose your department and preferred date — we'll confirm shortly." },
-      { property: "og:title", content: "Book an Appointment — Abhay Jeevan Hospital" },
+      { title: "Book Appointment — Vardan Hospital & Maternity Centre, Prayagraj" },
+      { name: "description", content: "Book a doctor's appointment at Vardan Hospital & Maternity Centre, Jhusi, Prayagraj. Choose your department and preferred date — we'll confirm shortly." },
+      { property: "og:title", content: "Book an Appointment — Vardan Hospital & Maternity Centre" },
       { property: "og:description", content: "Reserve a slot online." },
       { property: "og:url", content: "/appointment" },
     ],

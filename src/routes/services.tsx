@@ -6,9 +6,9 @@ import { HeartPulse, Baby, Bone, Activity, Siren, Microscope, ShieldCheck, Clipb
 export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
-      { title: "Services — Abhay Jeevan Hospital, Prayagraj" },
-      { name: "description", content: "Explore the medical services at Abhay Jeevan Hospital, Jhusi — general medicine, pediatrics, orthopedics, gynecology, emergency care, diagnostics and preventive health." },
-      { property: "og:title", content: "Hospital Services in Prayagraj — Abhay Jeevan" },
+      { title: "Services — Vardan Hospital & Maternity Centre, Prayagraj" },
+      { name: "description", content: "Explore the medical services at Vardan Hospital & Maternity Centre, Jhusi — general medicine, pediatrics, orthopedics, gynecology, emergency care, diagnostics and preventive health." },
+      { property: "og:title", content: "Hospital Services in Prayagraj — Vardan Hospital & Maternity Centre" },
       { property: "og:description", content: "Comprehensive multi-specialty care under one roof." },
       { property: "og:url", content: "/services" },
     ],

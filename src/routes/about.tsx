@@ -10,9 +10,9 @@ import icu from "@/assets/icu.jpg";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About Us — Abhay Jeevan Hospital, Prayagraj" },
-      { name: "description", content: "Learn about Abhay Jeevan Hospital in Jhusi, Prayagraj — our mission, vision, infrastructure and commitment to patient-first healthcare." },
-      { property: "og:title", content: "About Abhay Jeevan Hospital" },
+      { title: "About Us — Vardan Hospital & Maternity Centrel, Prayagraj" },
+      { name: "description", content: "Learn about Vardan Hospital & Maternity Centre in Jhusi, Prayagraj — our mission, vision, infrastructure and commitment to patient-first healthcare." },
+      { property: "og:title", content: "About Vardan Hospital & Maternity Centre" },
       { property: "og:description", content: "Trusted multi-specialty hospital in Jhusi, Prayagraj." },
       { property: "og:url", content: "/about" },
     ],
@@ -32,14 +32,14 @@ function AboutPage() {
             <div className="eyebrow mb-3">Our Story</div>
             <h2 className="text-3xl lg:text-4xl font-bold">Built in Jhusi, for the people of Prayagraj.</h2>
             <p className="mt-5 text-muted-foreground leading-relaxed">
-              Abhay Jeevan Hospital was founded with a clear purpose: to bring reliable, affordable, multi-specialty medical care closer to the families of Jhusi and greater Prayagraj. What began as a small clinic has grown into a trusted community hospital — with experienced consultants, modern diagnostics, and a dedicated nursing team.
+              Vardan Hospital & Maternity Centre was founded with a clear purpose: to bring reliable, affordable, multi-specialty medical care closer to the families of Jhusi and greater Prayagraj. What began as a small clinic has grown into a trusted community hospital — with experienced consultants, modern diagnostics, and a dedicated nursing team.
             </p>
             <p className="mt-4 text-muted-foreground leading-relaxed">
               Every protocol, every room, every conversation is designed around one principle — patients first.
             </p>
           </motion.div>
           <motion.img initial={{opacity:0,scale:0.95}} whileInView={{opacity:1,scale:1}} viewport={{once:true}} transition={{duration:0.7}}
-            src={building} alt="Abhay Jeevan Hospital building" className="rounded-3xl shadow-2xl shadow-brand/15" loading="lazy" width={1600} height={900} />
+            src={building} alt="Vardan Hospital & Maternity Centre building" className="rounded-3xl shadow-2xl shadow-brand/15" loading="lazy" width={1600} height={900} />
         </div>
       </section>
 

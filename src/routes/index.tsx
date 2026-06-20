@@ -5,11 +5,16 @@ import {
   HeartPulse, Baby, Bone, Activity, Microscope, Sparkles,
   MapPin, Phone, Star, Quote, ShieldCheck, Clock,
 } from "lucide-react";
-import heroImg from "@/assets/hero-doctor.png";
-import heroMobileImg from "@/assets/hero-doctor-mobile.png";
+import heroDoctor from "@/assets/hero-doctor.png";
+import heroDoctorMobile from "@/assets/hero-doctor-mobile.png";
 import teamImg from "@/assets/team.jpg";
-import { doc1, doc2 } from "@/lib/doctor-images";
-import { DoctorPhoto } from "@/components/DoctorPhoto";
+import doc1Asset from "@/assets/doctor1.jpg";
+import doc2Asset from "@/assets/doctor2.jpg";
+import doc3Asset from "@/assets/doctor3.jpg";
+
+const doc1 = doc1Asset;
+const doc2 = doc2Asset;
+const doc3 = doc3Asset;
 import icuImg from "@/assets/icu.jpg";
 import roomImg from "@/assets/room.jpg";
 import receptionImg from "@/assets/reception.jpg";
@@ -18,9 +23,9 @@ import diagImg from "@/assets/diagnostics.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Abhay Jeevan Hospital | Trusted Healthcare in Jhusi, Prayagraj" },
-      { name: "description", content: "Abhay Jeevan Hospital in Jhusi, Prayagraj — expert doctors, 24/7 emergency, diagnostics, pediatrics, gynecology and orthopedics under one roof." },
-      { property: "og:title", content: "Abhay Jeevan Hospital | Trusted Healthcare in Jhusi, Prayagraj" },
+      { title: "Vardan Hospital & Maternity Centre | Trusted Healthcare in Jhusi, Prayagraj" },
+      { name: "description", content: "Vardan Hospital & Maternity Centre in Jhusi, Prayagraj — expert doctors, 24/7 emergency, diagnostics, pediatrics, gynecology and orthopedics under one roof." },
+      { property: "og:title", content: "Vardan Hospital & Maternity Centre | Trusted Healthcare in Jhusi, Prayagraj" },
       { property: "og:description", content: "Compassionate, family-centered care in Prayagraj. Book an appointment today." },
       { property: "og:url", content: "/" },
     ],
@@ -61,85 +66,78 @@ const testimonials = [
 function HomePage() {
   return (
     <div>
-      {/* HERO */}
-      <section className="relative bg-gradient-to-b from-white via-sky-50/40 to-brand-soft md:overflow-hidden md:bg-brand-soft">
-        {/* Desktop background — unchanged from 768px up */}
-        <div className="absolute inset-0 hidden md:block">
-          <img
-            src={heroImg}
-            alt=""
-            aria-hidden
-            className="w-full h-full object-cover object-right [filter:contrast(1.08)_saturate(1.15)_brightness(1.02)]"
-            fetchPriority="high"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent lg:from-white lg:via-white/40 lg:via-40% lg:to-transparent lg:to-60%" />
-        </div>
-
-        {/* Mobile hero — full-viewport premium layout (below 768px) */}
-        <div className="md:hidden relative flex min-h-[100dvh] flex-col overflow-hidden bg-gradient-to-b from-sky-50/90 via-white to-brand-soft">
-          {/* Doctor — edge-to-edge foreground, no container or card */}
-          <div className="relative z-10 w-full shrink-0 overflow-hidden h-[42dvh] min-h-[320px] max-h-[480px]">
+      {/* HERO WRAPPER WITH QUICK ACTION CARDS */}
+      <div className="relative">
+        {/* HERO - DESKTOP */}
+        <section className="relative overflow-hidden bg-brand-soft hidden lg:block">
+          <div className="absolute inset-0">
             <img
-              src={heroMobileImg}
-              alt="Doctor at Abhay Jeevan Hospital"
-              className="absolute inset-0 h-full w-full origin-center scale-[1.12] object-cover object-[50%_20%] [filter:contrast(1.05)_saturate(1.1)_brightness(1.03)]"
+              src={heroDoctor}
+              alt="Doctor at Vardan Hospital & Maternity Centre"
+              className="w-full h-full object-cover object-right [filter:contrast(1.08)_saturate(1.15)_brightness(1.02)]"
               fetchPriority="high"
             />
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white via-white/40 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-white via-white/40 via-40% to-transparent to-60%" />
           </div>
+          <div className="container-page relative pt-28 pb-36 grid lg:grid-cols-2 gap-10">
+            <motion.div {...fadeUp} className="max-w-xl">
+              <div className="eyebrow mb-5">Caring for Life</div>
+              <h1 className="text-5xl lg:text-6xl font-bold leading-[1.05]">
+                Compassionate Healthcare<br />
+                <span className="text-brand-accent">for Every Family.</span>
+              </h1>
+              <p className="mt-6 text-lg text-muted-foreground max-w-lg">
+                Trusted medical care in Jhusi, Prayagraj — combining experienced specialists, modern infrastructure and a patient-first approach since our doors first opened.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link to="/appointment" className="btn-primary"><CalendarPlus className="h-4 w-4" /> Book Appointment</Link>
+                <Link to="/contact" className="btn-ghost"><PhoneCall className="h-4 w-4" /> Contact Hospital</Link>
+              </div>
+              <div className="mt-10 flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-brand-accent" /> NABH-aligned protocols</div>
+                <div className="flex items-center gap-2"><Clock className="h-4 w-4 text-brand-accent" /> 24/7 Emergency</div>
+                <div className="flex items-center gap-2"><Star className="h-4 w-4 text-brand-accent" /> 4.8 / 5 patient rating</div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
 
-          {/* Content — overlaps doctor fade, no banner/card wrapper */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            className="relative z-20 mt-6 flex flex-1 flex-col items-center px-5 pb-8 text-center"
-          >
-            <div className="eyebrow mb-4 tracking-[0.3em]">CARING FOR LIFE</div>
-            <h1 className="max-w-[18rem] text-[1.7rem] font-bold leading-[1.18] tracking-tight">
-              Compassionate Healthcare{" "}
+        {/* HERO - MOBILE */}
+        <section className="relative overflow-hidden bg-brand-soft lg:hidden">
+          <motion.div {...fadeUp} className="w-screen -mx-[calc((100vw-100%)/2)]">
+            <img
+              src={heroDoctorMobile}
+              alt="Doctors at Vardan Hospital & Maternity Centre"
+              className="w-full h-[70vw] min-h-[300px] max-h-[500px] object-cover object-top"
+              loading="lazy"
+            />
+          </motion.div>
+
+          <motion.div {...fadeUp} className="px-6 pt-6 pb-8 text-center">
+            <div className="eyebrow mb-2">Caring for Life</div>
+            <h1 className="text-2xl sm:text-3xl font-bold leading-[1.15]">
+              Compassionate <br />
+              Healthcare{" "}
               <span className="text-brand-accent">for Every Family.</span>
             </h1>
-            <p className="mx-auto mt-3 max-w-[20rem] text-[0.9rem] leading-relaxed text-muted-foreground">
-              Expert specialists, modern facilities, and 24/7 emergency care — trusted by families across Prayagraj.
+            <p className="mt-3 text-sm text-muted-foreground max-w-xs mx-auto">
+              Expert specialists, modern facilities, and 24/7 emergency care —
+              trusted by families across Prayagraj.
             </p>
-            <div className="mt-5 flex w-full max-w-[18rem] flex-col gap-2.5">
-              <Link to="/appointment" className="btn-primary min-h-12 w-full justify-center text-base">
+            <div className="mt-6 flex flex-col gap-3 max-w-xs mx-auto">
+              <Link to="/appointment" className="btn-primary w-full justify-center">
                 <CalendarPlus className="h-4 w-4" /> Book Appointment
               </Link>
-              <Link to="/contact" className="btn-ghost min-h-12 w-full justify-center text-base">
+              <Link to="/contact" className="btn-ghost w-full justify-center">
                 <PhoneCall className="h-4 w-4" /> Contact Hospital
               </Link>
             </div>
           </motion.div>
-        </div>
-
-        {/* Desktop content — unchanged from 768px up */}
-        <div className="container-page relative hidden gap-10 pt-16 pb-20 md:grid lg:grid-cols-2 lg:pt-28 lg:pb-36">
-          <motion.div {...fadeUp} className="max-w-xl">
-            <div className="eyebrow mb-5">Caring for Life</div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.05]">
-              Compassionate Healthcare<br />
-              <span className="text-brand-accent">for Every Family.</span>
-            </h1>
-            <p className="mt-6 text-lg text-muted-foreground max-w-lg">
-              Trusted medical care in Jhusi, Prayagraj — combining experienced specialists, modern infrastructure and a patient-first approach since our doors first opened.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/appointment" className="btn-primary"><CalendarPlus className="h-4 w-4" /> Book Appointment</Link>
-              <Link to="/contact" className="btn-ghost"><PhoneCall className="h-4 w-4" /> Contact Hospital</Link>
-            </div>
-            <div className="mt-10 flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
-              <div className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-brand-accent" /> NABH-aligned protocols</div>
-              <div className="flex items-center gap-2"><Clock className="h-4 w-4 text-brand-accent" /> 24/7 Emergency</div>
-              <div className="flex items-center gap-2"><Star className="h-4 w-4 text-brand-accent" /> 4.8 / 5 patient rating</div>
-            </div>
-          </motion.div>
-        </div>
+        </section>
 
         {/* Quick action cards overlap */}
-        <div className="container-page relative pb-16 pt-6 md:-mt-6 md:pt-0 lg:-mt-12">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="container-page relative py-6 lg:py-0 lg:-mt-12">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
             {[
               { icon: CalendarPlus, title: "Book Appointment", desc: "Reserve a slot online", to: "/appointment", tone: "brand" },
               { icon: Siren, title: "Emergency", desc: "24/7 rapid response", to: "/contact", tone: "accent" },
@@ -147,30 +145,33 @@ function HomePage() {
               { icon: PhoneCall, title: "Contact Us", desc: "+91 98765 43210", to: "/contact", tone: "soft" },
             ].map((a, i) => (
               <motion.div key={a.title} {...fadeUp} transition={{ duration: 0.5, delay: i * 0.08 }}>
-                <Link to={a.to} className={`group block rounded-2xl p-6 shadow-lg shadow-brand/5 border border-border bg-white hover:-translate-y-1 transition-all`}>
-                  <div className={`grid h-12 w-12 place-items-center rounded-xl mb-4 ${a.tone === "brand" ? "bg-brand text-brand-foreground" : a.tone === "accent" ? "bg-destructive text-white" : "bg-brand-soft text-brand-accent"}`}>
-                    <a.icon className="h-5 w-5" />
+                <Link to={a.to} className={`group block rounded-2xl p-4 lg:p-6 shadow-lg shadow-brand/5 border border-border bg-white hover:-translate-y-1 transition-all`}>
+                  <div className={`grid h-10 w-10 lg:h-12 lg:w-12 place-items-center rounded-xl mb-3 lg:mb-4 ${a.tone === "brand" ? "bg-brand text-brand-foreground"
+                      : a.tone === "accent" ? "bg-destructive text-white"
+                        : "bg-brand-soft text-brand-accent"
+                    }`}>
+                    <a.icon className="h-4 w-4 lg:h-5 lg:w-5" />
                   </div>
-                  <div className="font-semibold text-brand">{a.title}</div>
-                  <div className="text-sm text-muted-foreground mt-1">{a.desc}</div>
+                  <div className="font-semibold text-brand text-sm lg:text-base leading-snug">{a.title}</div>
+                  <div className="text-xs text-muted-foreground mt-1 leading-snug">{a.desc}</div>
                 </Link>
               </motion.div>
             ))}
           </div>
         </div>
-      </section>
+      </div>
 
       {/* ABOUT PREVIEW */}
       <section className="py-20 lg:py-28">
         <div className="container-page grid lg:grid-cols-2 gap-12 items-center">
           <motion.div {...fadeUp}>
-            <div className="eyebrow mb-3">About Abhay Jeevan</div>
+            <div className="eyebrow mb-3">About Vardan Hospital & Maternity Centre</div>
             <h2 className="text-3xl lg:text-4xl font-bold">A hospital built on trust, in the heart of Jhusi.</h2>
             <p className="mt-5 text-muted-foreground leading-relaxed">
-              Abhay Jeevan Hospital is a multi-specialty healthcare centre serving the families of Prayagraj and surrounding regions. We bring together specialist doctors, dedicated nursing staff and modern medical infrastructure under one roof — so every patient receives timely, honest and complete care.
+              Vardan Hospital & Maternity Centre is a multi-specialty healthcare centre serving the families of Prayagraj and surrounding regions. We bring together specialist doctors, dedicated nursing staff and modern medical infrastructure under one roof — so every patient receives timely, honest and complete care.
             </p>
             <div className="mt-8 grid grid-cols-3 gap-6">
-              {[["15+","Specialists"],["20K+","Patients served"],["24/7","Emergency care"]].map(([n,l]) => (
+              {[["15+", "Specialists"], ["20K+", "Patients served"], ["24/7", "Emergency care"]].map(([n, l]) => (
                 <div key={l}>
                   <div className="text-3xl font-display font-bold text-brand-accent">{n}</div>
                   <div className="text-xs uppercase tracking-widest text-muted-foreground mt-1">{l}</div>
@@ -218,7 +219,7 @@ function HomePage() {
             <p className="mt-4 text-muted-foreground">Doctors, nurses, technicians and support staff — united by a single mission: better outcomes, kinder care.</p>
           </motion.div>
           <motion.div {...fadeUp} transition={{ duration: 0.7, delay: 0.1 }} className="relative mt-12">
-            <img src={teamImg} alt="Abhay Jeevan Hospital healthcare team" className="rounded-3xl shadow-2xl shadow-brand/15 w-full" loading="lazy" width={1600} height={900} />
+            <img src={teamImg} alt="Vardan Hospital & Maternity Centre healthcare team" className="rounded-3xl shadow-2xl shadow-brand/15 w-full" loading="lazy" width={1600} height={900} />
           </motion.div>
         </div>
       </section>
@@ -232,32 +233,18 @@ function HomePage() {
           </motion.div>
           <div className="grid md:grid-cols-2 gap-8 mt-12">
             {[
-              { img: doc1, missingFile: "src/assets/doctor1.jpg", name: "Dr. Lal Ratnakar Singh", spec: "MBBS, MD — General Medicine", opdTimings: ["Mon - Sat: 10:00 AM - 2:00 PM", "Evening: 5:00 PM - 8:00 PM"], bio: "Senior physician with deep expertise in internal medicine, chronic disease management and preventive care at Abhay Jeevan Hospital." },
-              { img: doc2, missingFile: "src/assets/doctor2.jpg", name: "Dr. Anjali Singh", spec: "MBBS, MS, DNB, FMAS, GIMP — Gynecology & Obstetrics", opdTimings: ["Mon - Sat: 9:30 AM - 1:30 PM", "Evening: 4:30 PM - 7:30 PM"], bio: "Specialist in high-risk pregnancies, minimally invasive gynecological surgery and women's preventive health, known for her patient-first approach." },
+              { img: doc1, name: "Dr. A.P. Singh", spec: "Gastro & Laparoscopic Surgery", exp: "Senior Consultant", qual: "MBBS, MS", opdTimings: ["Mon - Sat: 9:00 AM - 2:00 PM", "Evening: 5:00 PM - 8:00 PM"], bio: "Specialist in Laparoscopic Gall Bladder & Appendix Surgery, Hernia & Colorectal Treatments, Laser Piles Fissure & Fistula Surgery and Endoscopy & Liver Care at Vardan Hospital & Maternity Centre." },
+
+              { img: doc2, name: "Dr. Pramesh Srivastava", spec: "General Medicine", exp: "Senior Consultant", qual: "MBBS, MD", opdTimings: ["Mon - Sat: 9:00 AM - 2:00 PM", "Evening: 5:00 PM - 8:00 PM"], bio: "Specialist in diagnosis and treatment of fever, viral and bacterial infections, seasonal illness and comprehensive patient care at Vardan Hospital & Maternity Centre." },
+
+              { img: doc3, name: "Dr. Abhishek Singh", spec: "General Medicine", exp: "MD Physician", qual: "MD", opdTimings: ["Mon - Sat: 9:00 AM - 2:00 PM", "Evening: 5:00 PM - 8:00 PM"], bio: "Dedicated MD Physician providing comprehensive healthcare with expert consultation, advanced medical diagnostics and compassionate patient care at Vardan Hospital & Maternity Centre." },
             ].map((d, i) => (
               <motion.div key={d.name} {...fadeUp} transition={{ duration: 0.6, delay: i * 0.1 }}
                 className="bg-white rounded-3xl overflow-hidden shadow-lg shadow-brand/5 grid sm:grid-cols-[200px_1fr]">
-                <DoctorPhoto src={d.img} alt={d.name} missingFile={d.missingFile} className="h-full w-full object-cover" width={800} height={1024} />
+                <img src={d.img} alt={d.name} className="h-full w-full object-cover" loading="lazy" width={800} height={1024} />
                 <div className="p-7">
                   <h3 className="text-xl font-semibold">{d.name}</h3>
                   <div className="text-sm text-brand-accent font-medium mt-1">{d.spec}</div>
-                  
-                  {d.opdTimings && (
-                    <div className="mt-3 p-3 bg-brand-soft/50 border border-brand-soft rounded-2xl">
-                      <div className="flex items-center gap-2 mb-1.5">
-                        <Clock className="h-3.5 w-3.5 text-brand-accent" />
-                        <span className="text-xs font-semibold text-brand">OPD Timings</span>
-                      </div>
-                      <div className="space-y-0.5">
-                        {d.opdTimings.map((timing, idx) => (
-                          <div key={idx} className="text-xs text-muted-foreground">
-                            {timing}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
                   <p className="text-sm text-muted-foreground mt-3 leading-relaxed">{d.bio}</p>
                   <Link to="/doctors" className="text-sm font-semibold text-brand-accent mt-4 inline-block">View profile →</Link>
                 </div>
@@ -341,12 +328,12 @@ function HomePage() {
         <div className="container-page">
           <motion.div {...fadeUp} className="mb-8">
             <div className="eyebrow mb-3">Visit Us</div>
-            <h2 className="text-3xl lg:text-4xl font-bold">Find Abhay Jeevan Hospital</h2>
+            <h2 className="text-3xl lg:text-4xl font-bold">Find Vardan Hospital & Maternity Centre</h2>
             <p className="text-muted-foreground mt-3 inline-flex items-center gap-2"><MapPin className="h-4 w-4 text-brand-accent" /> Jhusi, Prayagraj, Uttar Pradesh 211019</p>
           </motion.div>
           <div className="overflow-hidden rounded-3xl border border-border shadow-xl shadow-brand/5">
             <iframe
-              title="Abhay Jeevan Hospital location"
+              title="Vardan Hospital & Maternity Centre location"
               src="https://www.google.com/maps?q=Jhusi,Prayagraj,Uttar+Pradesh&output=embed"
               className="w-full h-[420px]"
               loading="lazy"

@@ -13,13 +13,13 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteLayout } from "../components/SiteLayout";
 
-const SITE_NAME = "Abhay Jeevan Hospital";
-const DESC = "Abhay Jeevan Hospital provides quality healthcare services in Jhusi, Prayagraj. Expert doctors, 24/7 emergency care, diagnostics, and patient-focused treatment.";
+const SITE_NAME = "Vardan Hospital & Maternity Centre";
+const DESC = "Vardan Hospital & Maternity Centre provides quality healthcare services in Jhusi, Prayagraj. Expert doctors, 24/7 emergency care, diagnostics, and patient-focused treatment.";
 
 const orgJsonLd = {
   "@context": "https://schema.org",
   "@type": "Hospital",
-  name: "Abhay Jeevan Hospital",
+  name: "Vardan Hospital & Maternity Centre",
   description: DESC,
   telephone: "+91-98765-43210",
   email: "care@abhayjeevan.in",
@@ -75,7 +75,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: `${SITE_NAME} | Trusted Healthcare in Jhusi, Prayagraj` },
       { name: "description", content: DESC },
       { name: "author", content: SITE_NAME },
-      { name: "keywords", content: "Abhay Jeevan Hospital, Hospital in Prayagraj, Best Hospital in Prayagraj, Hospital in Jhusi, Healthcare Prayagraj, Emergency Care Jhusi, Doctor Consultation Prayagraj" },
+      { name: "keywords", content: "Vardan Hospital & Maternity Centre, Hospital in Prayagraj, Best Hospital in Prayagraj, Hospital in Jhusi, Healthcare Prayagraj, Emergency Care Jhusi, Doctor Consultation Prayagraj" },
       { property: "og:site_name", content: SITE_NAME },
       { property: "og:title", content: `${SITE_NAME} | Trusted Healthcare in Jhusi, Prayagraj` },
       { property: "og:description", content: DESC },
@@ -88,6 +88,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" },
+      { rel: "icon", type: "image/png", href: "/favicon.png" },
     ],
     scripts: [
       { type: "application/ld+json", children: JSON.stringify(orgJsonLd) },

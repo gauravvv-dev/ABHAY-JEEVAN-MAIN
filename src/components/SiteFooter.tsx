@@ -1,17 +1,24 @@
 import { Link } from "@tanstack/react-router";
 import { Phone, Mail, MapPin, Facebook, Instagram, Youtube, Twitter } from "lucide-react";
+import symbolLogo from "../assets/vardan-hospital-logo.png";
+import wordmarkLogo from "../assets/logo.png";
 
 export function SiteFooter() {
   return (
     <footer className="bg-brand text-brand-foreground mt-24">
       <div className="container-page py-16 grid gap-12 lg:grid-cols-4">
         <div>
-          <div className="flex items-center gap-3">
-            <div className="grid h-11 w-11 place-items-center rounded-xl bg-white/15 font-display text-xl">A</div>
-            <div className="leading-tight">
-              <div className="font-display text-lg font-bold">Abhay Jeevan</div>
-              <div className="text-[11px] tracking-[0.2em] text-white/70 uppercase">Hospital</div>
-            </div>
+          <div className="flex items-center gap-2.5">
+            <img 
+              src={symbolLogo} 
+              alt="Vardan Hospital Symbol Logo" 
+              className="h-12 w-auto object-contain" 
+            />
+            <img 
+              src={wordmarkLogo} 
+              alt="Vardan Hospital Wordmark" 
+              className="h-10 w-auto object-contain" 
+            />
           </div>
           <p className="mt-5 text-sm text-white/75 leading-relaxed">
             Compassionate, family-centered healthcare for Prayagraj — combining experienced specialists with modern medical infrastructure in the heart of Jhusi.
@@ -65,7 +72,7 @@ export function SiteFooter() {
       </div>
       <div className="border-t border-white/10">
         <div className="container-page py-5 flex flex-col sm:flex-row gap-3 justify-between text-xs text-white/60">
-          <p>© {new Date().getFullYear()} Abhay Jeevan Hospital. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Vardan Hospital & Maternity Centre. All rights reserved.</p>
           <p>Designed with care for the families of Prayagraj.</p>
         </div>
       </div>

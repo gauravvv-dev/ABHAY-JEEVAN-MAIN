@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { CalendarPlus, MessageCircle } from "lucide-react";
 
 export function FloatingActions() {
-  const waMsg = encodeURIComponent("Hello Abhay Jeevan Hospital, I'd like to know more about your services.");
+  const waMsg = encodeURIComponent("Hello Vardan Hospital & Maternity Centre, I'd like to know more about your services.");
   return (
     <div className="fixed bottom-5 right-5 z-50 flex flex-col gap-3">
       <Link
