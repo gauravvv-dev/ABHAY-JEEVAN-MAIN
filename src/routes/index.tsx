@@ -1,9 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import {
   CalendarPlus, Siren, Stethoscope, PhoneCall,
-  HeartPulse, Baby, Bone, Activity, Microscope, Sparkles,
+  HeartPulse, Baby, Bone, Activity, Microscope,
   MapPin, Phone, Star, Quote, ShieldCheck, Clock,
+  Megaphone, CalendarDays, MapPinIcon,
 } from "lucide-react";
 import heroDoctor from "@/assets/hero-doctor.png";
 import heroDoctorMobile from "@/assets/hero-doctor-mobile.png";
@@ -11,6 +13,8 @@ import teamImg from "@/assets/team.jpg";
 import doc1Asset from "@/assets/doctor1.jpg";
 import doc2Asset from "@/assets/doctor2.jpg";
 import doc3Asset from "@/assets/doctor3.jpg";
+import { supabase } from "@/lib/supabase";
+import type { Camp, Announcement } from "@/lib/supabase";
 
 const doc1 = doc1Asset;
 const doc2 = doc2Asset;
@@ -63,7 +67,58 @@ const testimonials = [
   { name: "Pooja Mishra", role: "Patient, Prayagraj", text: "Modern facilities, fair pricing and doctors who actually listen. Easily the best hospital experience I've had in years." },
 ];
 
+function formatDate(dateStr: string) {
+  return new Date(dateStr).toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
+function formatTime(timeStr: string) {
+  if (!timeStr) return "";
+  const [h, m] = timeStr.split(":");
+  const hour = parseInt(h);
+  const ampm = hour >= 12 ? "PM" : "AM";
+  const hour12 = hour % 12 || 12;
+  return `${hour12}:${m} ${ampm}`;
+}
+
 function HomePage() {
+  const [camps, setCamps] = useState<Camp[]>([]);
+  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
+  const [loadingCamps, setLoadingCamps] = useState(true);
+  const [loadingAnnouncements, setLoadingAnnouncements] = useState(true);
+
+  useEffect(() => {
+    const today = new Date().toISOString().split("T")[0];
+
+    // Fetch upcoming published camps
+    supabase
+      .from("camps")
+      .select("*")
+      .eq("is_published", true)
+      .gte("camp_date", today)
+      .order("camp_date", { ascending: true })
+      .limit(3)
+      .then(({ data, error }) => {
+        if (!error && data) setCamps(data as Camp[]);
+        setLoadingCamps(false);
+      });
+
+    // Fetch latest published announcements
+    supabase
+      .from("announcements")
+      .select("*")
+      .eq("is_published", true)
+      .order("published_at", { ascending: false })
+      .limit(3)
+      .then(({ data, error }) => {
+        if (!error && data) setAnnouncements(data as Announcement[]);
+        setLoadingAnnouncements(false);
+      });
+  }, []);
+
   return (
     <div>
       {/* HERO WRAPPER WITH QUICK ACTION CARDS */}
@@ -112,7 +167,6 @@ function HomePage() {
               loading="lazy"
             />
           </motion.div>
-
           <motion.div {...fadeUp} className="px-6 pt-6 pb-8 text-center">
             <div className="eyebrow mb-2">Caring for Life</div>
             <h1 className="text-2xl sm:text-3xl font-bold leading-[1.15]">
@@ -135,7 +189,7 @@ function HomePage() {
           </motion.div>
         </section>
 
-        {/* Quick action cards overlap */}
+        {/* Quick action cards */}
         <div className="container-page relative py-6 lg:py-0 lg:-mt-12">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
             {[
@@ -145,11 +199,8 @@ function HomePage() {
               { icon: PhoneCall, title: "Contact Us", desc: "+91 98765 43210", to: "/contact", tone: "soft" },
             ].map((a, i) => (
               <motion.div key={a.title} {...fadeUp} transition={{ duration: 0.5, delay: i * 0.08 }}>
-                <Link to={a.to} className={`group block rounded-2xl p-4 lg:p-6 shadow-lg shadow-brand/5 border border-border bg-white hover:-translate-y-1 transition-all`}>
-                  <div className={`grid h-10 w-10 lg:h-12 lg:w-12 place-items-center rounded-xl mb-3 lg:mb-4 ${a.tone === "brand" ? "bg-brand text-brand-foreground"
-                      : a.tone === "accent" ? "bg-destructive text-white"
-                        : "bg-brand-soft text-brand-accent"
-                    }`}>
+                <Link to={a.to} className="group block rounded-2xl p-4 lg:p-6 shadow-lg shadow-brand/5 border border-border bg-white hover:-translate-y-1 transition-all">
+                  <div className={`grid h-10 w-10 lg:h-12 lg:w-12 place-items-center rounded-xl mb-3 lg:mb-4 ${a.tone === "brand" ? "bg-brand text-brand-foreground" : a.tone === "accent" ? "bg-destructive text-white" : "bg-brand-soft text-brand-accent"}`}>
                     <a.icon className="h-4 w-4 lg:h-5 lg:w-5" />
                   </div>
                   <div className="font-semibold text-brand text-sm lg:text-base leading-snug">{a.title}</div>
@@ -160,6 +211,129 @@ function HomePage() {
           </div>
         </div>
       </div>
+
+      {/* ── LIVE ANNOUNCEMENTS SECTION ── */}
+      {(loadingAnnouncements || announcements.length > 0) && (
+        <section className="py-16 lg:py-20 bg-brand-soft">
+          <div className="container-page">
+            <motion.div {...fadeUp} className="flex items-end justify-between flex-wrap gap-4 mb-10">
+              <div>
+                <div className="eyebrow mb-3 flex items-center gap-2">
+                  <Megaphone className="h-4 w-4" /> Latest News & Announcements
+                </div>
+                <h2 className="text-3xl lg:text-4xl font-bold">Stay informed.</h2>
+              </div>
+            </motion.div>
+
+            {loadingAnnouncements ? (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="rounded-2xl bg-white p-6 border border-border animate-pulse">
+                    <div className="h-4 bg-gray-200 rounded w-1/3 mb-3" />
+                    <div className="h-6 bg-gray-200 rounded w-3/4 mb-2" />
+                    <div className="h-4 bg-gray-200 rounded w-full mb-1" />
+                    <div className="h-4 bg-gray-200 rounded w-5/6" />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {announcements.map((a, i) => (
+                  <motion.div
+                    key={a.id}
+                    {...fadeUp}
+                    transition={{ duration: 0.5, delay: i * 0.07 }}
+                    className="rounded-2xl bg-white p-6 border border-border hover:border-brand-accent hover:shadow-lg transition"
+                  >
+                    <div className="text-xs text-muted-foreground mb-3">
+                      {a.published_at ? formatDate(a.published_at) : formatDate(a.created_at)}
+                    </div>
+                    <h3 className="text-base font-semibold text-brand mb-2">{a.title}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">{a.body}</p>
+                  </motion.div>
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* ── LIVE UPCOMING CAMPS SECTION ── */}
+      {(loadingCamps || camps.length > 0) && (
+        <section className="py-16 lg:py-20">
+          <div className="container-page">
+            <motion.div {...fadeUp} className="flex items-end justify-between flex-wrap gap-4 mb-10">
+              <div>
+                <div className="eyebrow mb-3 flex items-center gap-2">
+                  <CalendarDays className="h-4 w-4" /> Upcoming Medical Camps
+                </div>
+                <h2 className="text-3xl lg:text-4xl font-bold">Free health camps near you.</h2>
+                <p className="mt-3 text-muted-foreground">Vardan Hospital regularly organises free medical camps for the community.</p>
+              </div>
+            </motion.div>
+
+            {loadingCamps ? (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="rounded-2xl border border-border bg-white overflow-hidden animate-pulse">
+                    <div className="h-44 bg-gray-200" />
+                    <div className="p-5">
+                      <div className="h-5 bg-gray-200 rounded w-3/4 mb-3" />
+                      <div className="h-4 bg-gray-200 rounded w-1/2 mb-2" />
+                      <div className="h-4 bg-gray-200 rounded w-2/3" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {camps.map((camp, i) => (
+                  <motion.div
+                    key={camp.id}
+                    {...fadeUp}
+                    transition={{ duration: 0.5, delay: i * 0.07 }}
+                    className="group rounded-2xl border border-border bg-white overflow-hidden hover:border-brand-accent hover:shadow-xl hover:shadow-brand/5 transition"
+                  >
+                    {camp.banner_image_url ? (
+                      <div className="aspect-[16/9] overflow-hidden">
+                        <img
+                          src={camp.banner_image_url}
+                          alt={camp.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition duration-700"
+                          loading="lazy"
+                        />
+                      </div>
+                    ) : (
+                      <div className="aspect-[16/9] bg-brand-soft flex items-center justify-center">
+                        <CalendarDays className="h-12 w-12 text-brand-accent opacity-40" />
+                      </div>
+                    )}
+                    <div className="p-5">
+                      <h3 className="text-base font-semibold text-brand mb-3">{camp.title}</h3>
+                      {camp.description && (
+                        <p className="text-sm text-muted-foreground mb-3 line-clamp-2">{camp.description}</p>
+                      )}
+                      <div className="flex flex-col gap-1.5 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-2">
+                          <CalendarDays className="h-3.5 w-3.5 text-brand-accent flex-shrink-0" />
+                          {formatDate(camp.camp_date)}
+                          {camp.camp_time && ` · ${formatTime(camp.camp_time)}`}
+                        </div>
+                        {camp.location && (
+                          <div className="flex items-center gap-2">
+                            <MapPinIcon className="h-3.5 w-3.5 text-brand-accent flex-shrink-0" />
+                            {camp.location}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+      )}
 
       {/* ABOUT PREVIEW */}
       <section className="py-20 lg:py-28">
@@ -233,11 +407,9 @@ function HomePage() {
           </motion.div>
           <div className="grid md:grid-cols-2 gap-8 mt-12">
             {[
-              { img: doc1, name: "Dr. A.P. Singh", spec: "Gastro & Laparoscopic Surgery", exp: "Senior Consultant", qual: "MBBS, MS", opdTimings: ["Mon - Sat: 9:00 AM - 2:00 PM", "Evening: 5:00 PM - 8:00 PM"], bio: "Specialist in Laparoscopic Gall Bladder & Appendix Surgery, Hernia & Colorectal Treatments, Laser Piles Fissure & Fistula Surgery and Endoscopy & Liver Care at Vardan Hospital & Maternity Centre." },
-
-              { img: doc2, name: "Dr. Pramesh Srivastava", spec: "General Medicine", exp: "Senior Consultant", qual: "MBBS, MD", opdTimings: ["Mon - Sat: 9:00 AM - 2:00 PM", "Evening: 5:00 PM - 8:00 PM"], bio: "Specialist in diagnosis and treatment of fever, viral and bacterial infections, seasonal illness and comprehensive patient care at Vardan Hospital & Maternity Centre." },
-
-              { img: doc3, name: "Dr. Abhishek Singh", spec: "General Medicine", exp: "MD Physician", qual: "MD", opdTimings: ["Mon - Sat: 9:00 AM - 2:00 PM", "Evening: 5:00 PM - 8:00 PM"], bio: "Dedicated MD Physician providing comprehensive healthcare with expert consultation, advanced medical diagnostics and compassionate patient care at Vardan Hospital & Maternity Centre." },
+              { img: doc1, name: "Dr. A.P. Singh", spec: "Gastro & Laparoscopic Surgery", exp: "Senior Consultant", qual: "MBBS, MS", bio: "Specialist in Laparoscopic Gall Bladder & Appendix Surgery, Hernia & Colorectal Treatments, Laser Piles Fissure & Fistula Surgery and Endoscopy & Liver Care at Vardan Hospital & Maternity Centre." },
+              { img: doc2, name: "Dr. Pramesh Srivastava", spec: "General Medicine", exp: "Senior Consultant", qual: "MBBS, MD", bio: "Specialist in diagnosis and treatment of fever, viral and bacterial infections, seasonal illness and comprehensive patient care at Vardan Hospital & Maternity Centre." },
+              { img: doc3, name: "Dr. Abhishek Singh", spec: "General Medicine", exp: "MD Physician", qual: "MD", bio: "Dedicated MD Physician providing comprehensive healthcare with expert consultation, advanced medical diagnostics and compassionate patient care at Vardan Hospital & Maternity Centre." },
             ].map((d, i) => (
               <motion.div key={d.name} {...fadeUp} transition={{ duration: 0.6, delay: i * 0.1 }}
                 className="bg-white rounded-3xl overflow-hidden shadow-lg shadow-brand/5 grid sm:grid-cols-[200px_1fr]">
